@@ -1,0 +1,128 @@
+{
+  "root": true,
+  "plugins": [
+    "@typescript-eslint",
+    "import",
+    "prettier",
+    "react",
+    "react-hooks",
+    "sort-export-all"
+  ],
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/typescript",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "files": ["*.ts", "*.tsx"],
+    "project": "tsconfig.json"
+  },
+  "rules": {
+    /* prettier */
+    "prettier/prettier": "warn",
+    /* react */
+    "react/react-in-jsx-scope": "off",
+    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    /* ts */
+    "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      { "prefer": "type-imports" }
+    ],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": ["typeAlias"],
+        "format": ["PascalCase"]
+      },
+      {
+        "selector": "interface",
+        "prefix": ["I"],
+        "format": ["PascalCase"],
+        "filter": {
+          "regex": "^(DefaultRootState|Document|Window|RootParamList)$",
+          "match": false
+        }
+      }
+    ],
+    /* import/sort */
+    "import/order": [
+      "error",
+      {
+        "pathGroups": [
+          {
+            "pattern": "\\./styles",
+            "patternOptions": {
+              "matchBase": true,
+              "dot": true,
+              "nocomment": true
+            },
+            "group": "index",
+            "position": "after"
+          },
+          {
+            "pattern": "*(react|react-native|react-redux)",
+            "group": "builtin",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react"],
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          ["parent", "sibling", "index"],
+          "object"
+        ],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
+    "import/default": "error",
+    "import/export": "error",
+    "sort-export-all/sort-export-all": "warn",
+    "sort-imports": [
+      "warn",
+      {
+        "ignoreDeclarationSort": true
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[jt]s?(x)"
+      ],
+      "extends": ["plugin:testing-library/react"],
+      "plugins": ["jest"],
+      "rules": {
+        /* jest */
+        "jest/expect-expect": "error",
+        /* rtl */
+        "testing-library/await-async-query": "error",
+        "testing-library/no-await-sync-events": "error",
+        "testing-library/no-await-sync-query": "error",
+        "testing-library/no-debugging-utils": "warn",
+        "testing-library/no-manual-cleanup": "error",
+        "testing-library/prefer-explicit-assert": "error",
+        "testing-library/prefer-user-event": "error",
+        // This needs to be a warning until we can remove all our shallowly rendered tests
+        "testing-library/render-result-naming-convention": "warn",
+        /* ts */
+        "@typescript-eslint/no-explicit-any": "off"
+      }
+    }
+  ]
+}
